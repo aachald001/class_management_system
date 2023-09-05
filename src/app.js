@@ -74,14 +74,6 @@ app.post("/register",async(req,res)=>{
     res.status(400).send(error);
    }
 });
-
-
-
-// app.get("/signin",(req,res)=>{
-//     res.render("signin")
-// });
-// app.get('')
-
 app.post("/index",async(req,res)=>{
    try{
        const user1 = req.body.username;
@@ -91,7 +83,6 @@ app.post("/index",async(req,res)=>{
        const isMatch =  await bcrypt.compare(password,useremail.password);
 
        if(isMatch){
-        //  const arr=useremail.participentgrp
         res.status(201).render("home",{useremail});
        }
        else{
@@ -107,21 +98,18 @@ app.get("/paper",(req,res)=>{
     console.log("get method of paper");
     res.render("paper");
 });
-// app.get("/images/1681650279509.pdf",(req,res)=>{
-//     res.render("images/1681650279509.pdf");
-// })
-app.post("/paper",async(req,res)=>{
-    try{
-        console.log("post method of paper");
-        const dept=req.body.dept;
-        const deptdetails=await Paper.findOne({dept:dept});
-        console.log(deptdetails);
-        res.status(201).render("sem",{deptdetails});
-    }
-    catch(error){
-        res.status(400).send("error")
-    }
-});
+// app.post("/paper",async(req,res)=>{
+//     try{
+//         console.log("post method of paper");
+//         const dept=req.body.dept;
+//         const deptdetails=await Paper.findOne({dept:dept});
+//         console.log(deptdetails);
+//         res.status(201).render("sem",{deptdetails});
+//     }
+//     catch(error){
+//         res.status(400).send("error")
+//     }
+// });
 app.get("/sem",async(req,res)=>{
     console.log("get method of sem")
     var dept=req.query.dept;
@@ -134,39 +122,40 @@ app.get("/notes" ,async(req,res)=>{
     console.log("get method of notes..");
     res.render("notes");
 });
-app.post("/notes",async(req,res)=>{
-    try{
-        console.log("hello");
-        const dept=req.body.dept;
-        console.log(dept);
-        const deptdetails=await Note.findOne({dept:dept});
-        console.log(deptdetails);
-        res.status(201).render("semN",{deptdetails});
-    }
-    catch(error){
-        res.status(400).send("error")
-    }
-});
+// app.post("/notes",async(req,res)=>{
+//     try{
+//         console.log("hello");
+//         const dept=req.body.dept;
+//         console.log(dept);
+//         const deptdetails=await Note.findOne({dept:dept});
+//         console.log(deptdetails);
+//         res.status(201).render("semN",{deptdetails});
+//     }
+//     catch(error){
+//         res.status(400).send("error")
+//     }
+//});
 /*fir se home page per vapas ane per admin portal show nhi ho rha tha to useremail ko top per declare kiya per hm use const nhi declar ke skte the 
 kyuki initialize kena padh rha tha to var declare kr diya*/
 app.get("/home",(req,res)=>{
+    console.log(useremail);
     res.render("home",{useremail});
 });
 app.get("/semN",async(req,res)=>{
     var dept=req.query.dept;
     console.log(dept);
     const deptdetails=await Note.findOne({dept:dept});
-    console.log("get method of sem..");
+    console.log("get method of semN..");
     
     res.render("semN",{deptdetails});
 });
 app.get("/adminportal",(req,res)=>{
-    res.render("adminportal");
+    res.render("adminportal",{useremail});
 })
 app.get("/assingment",(req,res)=>{
     Task.find({})
     .then((x)=>{
-        res.render("assingment",{x});
+        res.render("assingment",{x,useremail});
         console.log(x);
     })
     .catch((y)=>{
@@ -175,15 +164,6 @@ app.get("/assingment",(req,res)=>{
 
 });
 app.post("/create-task",async(req,res)=>{
-    //const dateStr = req.body.date; // a date string in ISO 8601 format
-//     console.log(dateStr);
-// const date = new Date(dateStr);
-// console.log(date); // create a new Date object with the given date string
-// const timestamp = date.getTime(); // get the timestamp in milliseconds
-// console.log(timestamp);
-// const formattedDate = '${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()} ';
-// console.log(timestamp)
-// console.log(formattedDate); 
     const task=new Task({
         description:req.body.description,
          subject:req.body.subject,
@@ -191,7 +171,6 @@ app.post("/create-task",async(req,res)=>{
     });
 
     const tasking= await task.save();
-    // res.status(201).render("assingment",task);
     res.redirect("back");
     
 });
@@ -224,7 +203,7 @@ app.get('/upload',function(req,res,next)
 {
     Timetable.find({})
     .then((x)=>{
-        res.render("timetable",{x});
+        res.render("timetable",{x,useremail});
         console.log(x);
     })
     .catch((y)=>{
@@ -240,24 +219,15 @@ app.post('/upload', upload,async(req,res,next)=>{
     var imagedetails=new Timetable({
         image:imageFile
     });
-
     const tabl= await  imagedetails.save();
-    // imagedata.exec(async(err,data)=>{
-    //     if(err) throw err;
-    //     res.render('');
-    // })
   res.redirect("back");
-    // imagedetails.save(function(err,doc){
-    //    if(err)throw err;
-    //    res.render('timetable',{title:"upload time table",success:success});
-    //})
 })
 
 
 app.get("/notice",(req,res)=>{
     Notice.find({})
     .then((x)=>{
-        res.render("notice",{x});
+        res.render("notice",{x,useremail});
         console.log(x);
     })
     .catch((y)=>{
@@ -274,39 +244,55 @@ app.post("/create-notice",async(req,res)=>{
     });
 
     const announce= await notice.save();
-    // res.status(201).render("assingment",task);
     res.redirect("back");
     
 });
 
 app.get("/delete-notice",async(req,res)=>{
     var id=req.query;
-    console.log(id);
     var count=Object.keys(id).length;
     for(let i=0;i<count;i++){
         await Notice.findByIdAndDelete(Object.keys(id)[i])
     }
     return res.redirect('back');
     })
+    
+    
 
 
     app.get("/addstu",async(req,res)=>{
-        console.log("hiiiiiii")
-        console.log(useremail);
         const use=useremail;
         const semdetails=await Sem.findOne({sem:use.sem});
-        res.render("addstu",{semdetails});
+        res.render("addstu",{semdetails,useremail});
     })
     app.post("/create-stu",async(req,res)=>{
            const roll=req.body.roll;
            const use=useremail;
           await Sem.findOneAndUpdate({sem:use.sem},{$addToSet:{stu:roll},});
           await Register.findOneAndUpdate({roll:roll},{$set:{sem:use.sem}});
-        // const announce= await Sem.save();
-        // res.status(201).render("assingment",task);
         res.redirect("back");
         
     });
+    app.get("/delete-stu",async(req,res)=>{
+        const rollnums=req.query;
+        console.log(rollnums);
+        const use=useremail;
+        try {
+            if (rollnums && Object.keys(rollnums).length > 0) {
+              const rollsToDelete = Object.keys(rollnums); // Get the roll numbers to delete
+        
+              // Update the database using the $pull operator to remove the specified rolls from the 'stu' array
+              await Sem.updateMany({sem:use.sem}, { $pull: { stu: { $in: rollsToDelete } } });
+        
+              return res.redirect('back');
+            } else {
+              return res.status(400).send("No roll numbers selected for deletion.");
+            }
+          } catch (error) {
+            console.error(error);
+            return res.status(500).send("An error occurred while deleting the roll numbers.");
+          }
+        });
 
     app.get("/stuhome",async(req,res)=>{
         res.render("stuhome",{useremail});

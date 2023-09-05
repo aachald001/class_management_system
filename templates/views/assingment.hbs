@@ -3,7 +3,7 @@
     <head>
         <title>
             
-            Task
+            ClassConneX
 
         </title>
         
@@ -253,19 +253,19 @@
 
 
     <header class="header">
-        <h1 class="logo">COLLEGESPACE</h1>
+        <h1 class="logo">ClassConneX</h1>
       
 
       <nav class="navbar">
         <ul class="navbar-list">
           <li><a class="navbar-link" href="/home">Home</a></li>
           <li><a class="navbar-link" href="/assingment">Assingment</a></li>
-          <li><a class="navbar-link" href="#">Attendence</a></li>
+          <li><a class="navbar-link" href="/addstu">Add-stu</a></li>
           <li><a class="navbar-link" href="/upload">TimeTable</a></li>
          <li><a class="navbar-link" href="/notice">notice</a></li>
                 
           {{#if useremail.cr}}
-              <li><a class="navbar-link" href="#">adminportal</a></li>
+              <li><a class="navbar-link" href="adminportal">adminportal</a></li>
               {{/if}}
         </ul>
       </nav>
@@ -333,8 +333,8 @@
 
                                <td> <input type="checkbox" name="{{ _id }}" ></td>
                                <td> <p id="task-description">{{description }}</td>
-                                <td><p id="task-category"></p>: {{ subject }}</td>
-                                <td><p id="due-date">: {{ date }}</p></td>
+                                <td><p id="task-category"></p> {{ subject }}</td>
+                                <td><p id="due-date"> {{ date }}</p></td>
 </tr>
                     
 
@@ -345,7 +345,7 @@
                            
 </table>
 <div  align = "center"><input type="submit" class="btn btn-danger" value="DELETE TASK">
-                </div>></form>
+                </div></form>
 
         
             </div>

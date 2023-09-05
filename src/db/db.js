@@ -1,7 +1,8 @@
 const mongoose=require('mongoose');
 mongoose.set('strictQuery', false);
+require("dotenv").config({ path: "./.env" });
 //inplace of localhost put 0.0.0.0
-mongoose.connect('mongodb://0.0.0.0:27017/college_space',{
+mongoose.connect(process.env.DATABASE,{
     useNewUrlParser:true,
     useUnifiedTopology:true
     //useCreateIndex:true
