@@ -16,6 +16,7 @@ const Task=require("./models/task");
 const Timetable=require("./models/timetable");
 const Notice=require("./models/notices");
 const Sem=require("./models/semesters");
+const Clubevent=require("./models/clubevent");
 
 
 let port = process.env.PORT || 8000;
@@ -256,6 +257,39 @@ app.get("/delete-notice",async(req,res)=>{
     }
     return res.redirect('back');
     })
+
+    app.get("/club",(req,res)=>{
+        Clubevent.find({})
+        .then((x)=>{
+            res.render("club",{x,useremail});
+            console.log(x);
+        })
+        .catch((y)=>{
+            console.log(y);
+        })
+    
+    });
+    
+    app.post("/create-clubevent",async(req,res)=>{
+        const clubevent=new Clubevent({
+            description:req.body.description,
+            club:req.body.club,
+            date:req.body.date
+        });
+    
+        const announce= await clubevent.save();
+        res.redirect("back");
+        
+    });
+    
+    app.get("/delete-clubevent",async(req,res)=>{
+        var id=req.query;
+        var count=Object.keys(id).length;
+        for(let i=0;i<count;i++){
+            await Clubevent.findByIdAndDelete(Object.keys(id)[i])
+        }
+        return res.redirect('back');
+        })
     
     
 
@@ -300,7 +334,7 @@ app.get("/delete-notice",async(req,res)=>{
     app.get("/stuassing",async(req,res)=>{
         Task.find({})
         .then((x)=>{
-            res.render("stuassing",{x});
+            res.render("stuassing", { x: x, useremail: useremail });
             console.log(x);
         })
         .catch((y)=>{
@@ -310,7 +344,17 @@ app.get("/delete-notice",async(req,res)=>{
     app.get("/stunotice",async(req,res)=>{
         Notice.find({})
         .then((x)=>{
-            res.render("stunotice",{x});
+            res.render("stunotice", { x: x, useremail: useremail });
+            console.log(x);
+        })
+        .catch((y)=>{
+            console.log(y);
+        })
+    })
+    app.get("/stuclub",async(req,res)=>{
+        Clubevent.find({})
+        .then((x)=>{
+            res.render("stuclub", { x: x, useremail: useremail });
             console.log(x);
         })
         .catch((y)=>{
@@ -321,7 +365,7 @@ app.get("/delete-notice",async(req,res)=>{
     {
         Timetable.find({})
         .then((x)=>{
-            res.render("stutimetabl",{x});
+            res.render("stutimetabl", { x: x, useremail: useremail });
             console.log(x);
         })
         .catch((y)=>{

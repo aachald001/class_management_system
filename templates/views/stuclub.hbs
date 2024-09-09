@@ -278,7 +278,8 @@
               <li><a class="navbar-link" href="/home">Home</a></li>
           <li><a class="navbar-link" href="/paper">Papers</a></li>
           <li><a class="navbar-link" href="/notes">Notes</a></li>
-          <li><a class="navbar-link" href="/stuclub">Club</a></li>
+          <li><a class="navbar-link" href="/stuclub">Notes</a></li>
+          
           <li><a class="navbar-link" href="#">E-book</a></li>
          {{#if useremail.sem}}
          <li><a class="navbar-link" href="/stuhome">{{useremail.sem}}</a></li>
@@ -299,14 +300,14 @@
             <!-- form to create task -->
         
         <div>          
-                <h1 align="center">Notice</h1>
+                <h1 align="center">Club Event</h1>
 
                     <table class="table">
                         <thead class="he">
                             <tr>
                               <th></th>
-                              <th>Notice</th>
-                              <th>Subject</th>
+                              <th>Event</th>
+                              <th>club</th>
                             <th>date</th>
                             </tr>
                           </thead>
@@ -317,7 +318,7 @@
 
                                <td> <p class="task">*</p></td>
                                <td> <p class="task">{{description }}</p></td>
-                                <td><p class="task"> {{ subject }}</p></td>
+                                <td><p class="task"> {{ club }}</p></td>
                                 <td><p class="task">{{ date}}</p></td>
 </tr>
                     

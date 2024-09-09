@@ -232,6 +232,14 @@ Responsive Codes
           <li><a class="navbar-link" href="/paper">Papers</a></li>
           <li><a class="navbar-link" href="/notes">Notes</a></li>
            <li><a class="navbar-link" href="#">E-book</a></li>
+            <li><a class="navbar-link" href="/stuclub">Club</a></li>
+            {{#if useremail.sem}}
+         <li><a class="navbar-link" href="/stuhome">{{useremail.sem}}</a></li>
+         {{/if}}
+                
+          {{#if useremail.cr}}
+              <li><a class="navbar-link" href="/adminportal">adminportal</a></li>
+              {{/if}}
         </ul>
       </nav>
 
